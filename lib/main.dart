@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   bmitext1: bmitexttemp
                                                 )));
                                   },
-                                  child: Text('More'),
+                                  child: Text('MORE'),
                                 ),
                                 offstage: flag,
                               )
