@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class secondpage extends StatefulWidget {
   final double BMI;
@@ -47,6 +48,7 @@ class _secondpageState extends State<secondpage> {
                       ],
                     ))
               ]),
+
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: StadiumBorder(),
