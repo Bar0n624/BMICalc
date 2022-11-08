@@ -1,0 +1,3 @@
+/home/bar0n/AndroidStudioProjects/BMICalc/CMakeFiles/flutter_assemble.dir
+/home/bar0n/AndroidStudioProjects/BMICalc/CMakeFiles/edit_cache.dir
+/home/bar0n/AndroidStudioProjects/BMICalc/CMakeFiles/rebuild_cache.dir

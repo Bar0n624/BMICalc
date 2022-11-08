@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:newtest/bminfo.dart';
 
 void main() {
   runApp(const Myapp());
@@ -35,8 +36,18 @@ class _MyHomePageState extends State<MyHomePage> {
   double BMI = 0;
   String bmi = 'Your BMI is:';
   String text = '';
-  Text bmitext = Text('You are: ',
-      style: TextStyle(fontSize: 30, color: Colors.white), textAlign: TextAlign.center,);
+  bool flag = true;
+  Text bmitexttemp=Text('');
+  Text bmitext = Text(
+    'You are: ',
+    style: TextStyle(fontSize: 30, color: Colors.white),
+    textAlign: TextAlign.center,
+  );
+  Text bmitext1 = Text(
+    'You are: ',
+    style: TextStyle(fontSize: 30, color: Colors.white),
+    textAlign: TextAlign.center,
+  );
   final myController = TextEditingController();
   final weightController = TextEditingController();
   @override
@@ -98,7 +109,54 @@ class _MyHomePageState extends State<MyHomePage> {
                         Text(bmi,
                             style: const TextStyle(
                                 fontSize: 30, color: Colors.white)),
-                        bmitext
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              bmitext,
+                              Offstage(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: StadiumBorder(),
+                                    padding: EdgeInsets.all(20),
+                                    backgroundColor:
+                                        Colors.blue, // <-- Button color
+                                    foregroundColor: Colors.white,
+                                    // <-- Splash color
+                                  ),
+                                  onPressed: () {
+                                    setState((){
+                                      HapticFeedback.lightImpact();
+                                      bmi = 'Your BMI is : ';
+                                      height = 100;
+                                      heighttemp = '100';
+                                      myController.text = heighttemp;
+                                      weight = 50;
+                                      weighttemp = '50';
+                                      weightController.text = weighttemp;
+                                      text = '';
+                                      flag = true;
+                                      bmitexttemp=bmitext;
+                                      bmitext = Text('You are:',
+                                          style:
+                                          TextStyle(fontSize: 30, color: Colors.white),
+                                          textAlign: TextAlign.center);
+                                    });
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                secondpage(
+                                                  BMI: BMI,
+                                                  bmitext: bmitext1,
+                                                  bmitext1: bmitexttemp
+                                                )));
+                                  },
+                                  child: Text('More'),
+                                ),
+                                offstage: flag,
+                              )
+                            ]),
                       ]))
             ]),
             Container(
@@ -174,7 +232,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               });
                             },
                             child: Text(
-                              '-',textAlign: TextAlign.center,
+                              '-',
+                              textAlign: TextAlign.center,
                               style: const TextStyle(
                                   fontSize: 50, color: Colors.white),
                             )),
@@ -242,9 +301,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           weighttemp = '50';
                           weightController.text = weighttemp;
                           text = '';
+                          flag = true;
                           bmitext = Text('You are:',
                               style:
-                              TextStyle(fontSize: 30, color: Colors.white),textAlign: TextAlign.center);
+                                  TextStyle(fontSize: 30, color: Colors.white),
+                              textAlign: TextAlign.center);
                         });
                       },
                       child: Text('RESET',
@@ -259,34 +320,57 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       onPressed: () {
                         setState(() {
+                          flag = false;
                           HapticFeedback.lightImpact();
                           BMI = weight * 10000 / (height * height);
-                          if (((BMI*10).round())/10 < 18.5) {
+                          if (((BMI * 10).round()) / 10 < 18.5) {
                             minweight = (18.5 * height * height) / 10000;
                             text =
-                                'You are Underweight by \n${((minweight - weight) * 10).round() / 10} kg';
-                            bmitext = Text(text,
+                                'You need to gain \n${((minweight - weight) * 10).round() / 10} kg';
+                            String text1 = 'You are underweight';
+                            bmitext1 = Text(text,
                                 style: TextStyle(
-                                    fontSize: 30, color: Colors.yellow),textAlign: TextAlign.center,);
-                          } else if ( ((BMI*10).round())/10>= 18.5 && ((BMI*10).round())/10 < 25) {
+                                    fontSize: 30, color: Colors.yellow));
+                            bmitext = Text(
+                              text1,
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.yellow),
+                              textAlign: TextAlign.center,
+                            );
+                          } else if (((BMI * 10).round()) / 10 >= 18.5 &&
+                              ((BMI * 10).round()) / 10 < 25) {
                             text = 'Your weight is normal';
+                            bmitext1 = Text('All good!',
+                                style: TextStyle(
+                                    fontSize: 30, color: Colors.green));
                             bmitext = Text(text,
                                 style: TextStyle(
                                     fontSize: 30, color: Colors.green));
-                          } else if (((BMI*10).round())/10 >= 25 && ((BMI*10).round())/10 < 30) {
+                          } else if (((BMI * 10).round()) / 10 >= 25 &&
+                              ((BMI * 10).round()) / 10 < 30) {
                             maxweight = (25 * height * height) / 10000;
                             text =
-                                'You are overweight by \n${((weight - maxweight) * 10).round() / 10} kg';
-                            bmitext = Text(text,
+                                'You need to lose \n${((weight - maxweight) * 10).round() / 10} kg';
+                            String text1 = 'You are overweight';
+                            bmitext1 = Text(text,
                                 style: TextStyle(
-                                    fontSize: 30, color: Colors.yellow),textAlign: TextAlign.center);
+                                    fontSize: 30, color: Colors.yellow));
+                            bmitext = Text(text1,
+                                style: TextStyle(
+                                    fontSize: 30, color: Colors.yellow),
+                                textAlign: TextAlign.center);
                           } else {
                             maxweight = (30 * height * height) / 10000;
                             text =
-                                'You are Obese by \n${((weight - maxweight) * 10).round() / 10} kg';
-                            bmitext = Text(text,
+                                'You need to lose \n${((weight - maxweight) * 10).round() / 10} kg';
+                            String text1 = 'You are Obese';
+                            bmitext1 = Text(text,
+                                style: TextStyle(
+                                    fontSize: 30, color: Colors.red));
+                            bmitext = Text(text1,
                                 style:
-                                    TextStyle(fontSize: 30, color: Colors.red),textAlign: TextAlign.center);
+                                    TextStyle(fontSize: 30, color: Colors.red),
+                                textAlign: TextAlign.center);
                           }
 
                           bmi =

@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+ea1e292f2012a8adf3ec93227750622f /home/bar0n/AndroidStudioProjects/BMICalc/linux/flutter/ephemeral/libflutter_linux_gtk.so
+638984760d4f3666ecf34a2889ce4c68 CMakeFiles/flutter_assemble
